@@ -3,6 +3,7 @@ import time
 from memory_profiler import memory_usage
 
 def benchmark(func):
+
     def wrapper(*args, **kwargs):
         start_mem = memory_usage()[0]
         start_time = time.perf_counter()
@@ -19,4 +20,5 @@ def benchmark(func):
         print(f"{func.__name__} 함수 메모리 사용량: {mem_diff:.4f} MiB\n")
 
         return result
+
     return wrapper
