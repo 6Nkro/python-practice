@@ -1,4 +1,3 @@
-import itertools
 from utils import benchmark
 
 DAN = range(2, 100000)

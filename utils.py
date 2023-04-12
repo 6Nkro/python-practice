@@ -2,8 +2,8 @@ import time
 # pip install memory-profiler
 from memory_profiler import memory_usage
 
-
 def benchmark(func):
+
     def wrapper(*args, **kwargs):
         start_mem = memory_usage()[0]
         start_time = time.perf_counter()

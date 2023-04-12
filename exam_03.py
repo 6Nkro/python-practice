@@ -48,7 +48,7 @@ print(q3)
 
 # 7. 1부터 100까지 자연수 중 '홀수'만 한 라인으로 출력 하세요.
 
-print([str(n) for n in range(1, 101, 2)])
+print([n for n in range(1, 101, 2)])
 
 # 8. 아래 리스트 항목 중에서 5글자 이상의 단어만 출력하세요.
 q4 = ["nice", "study", "python", "anaconda", "!"]
