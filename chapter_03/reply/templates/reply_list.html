@@ -1,0 +1,13 @@
+<div class="reply-list my-5">
+    {% for reply in replies %}
+    <div class="reply my-1">
+        <div class="d-flex">
+            <span class="fw-bold">{{ reply.writer }}</span>
+            <span class="text-muted" style="margin-left: auto;">{{ reply.write_date|date:"Y-m-d H:i:s" }}</span>
+        </div>
+        <p>{{ reply.content }}</p>
+
+    </div>
+    <hr>
+    {% endfor %}
+</div>

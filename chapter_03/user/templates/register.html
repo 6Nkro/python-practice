@@ -1,0 +1,72 @@
+{% extends "base.html" %} {% block contents %}
+<div class="row my-3">
+    <div class="col-12 text-center">
+        <h1>회원가입</h1>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-12">{{ error }}</div>
+</div>
+<div class="row my-3 justify-content-center">
+    <div class="col-12 w-50">
+        <form method="POST" action="" id="signup-form">
+            {% csrf_token %}
+            <div class="form-group my-3">
+                <label for="user_name">이름</label>
+                <input type="text" class="form-control" id="user_name" placeholder="이름" name="user_name" />
+            </div>
+            <div class="form-group my-3">
+                <label for="user_email">이메일</label>
+                <input type="email" class="form-control" id="user_email" placeholder="이메일" name="user_email" />
+            </div>
+            <div class="form-group my-3">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" />
+            </div>
+            <div class="form-group my-3">
+                <label for="re-password">비밀번호 확인</label>
+                <input type="password" class="form-control" id="re-password" placeholder="비밀번호 확인" />
+            </div>
+            <button type="button" class="btn btn-secondary w-100 my-1" id="submit-button">등록</button>
+            <button type="button" class="btn btn-secondary w-100 my-1" onclick="history.back()">뒤로가기</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    const isExistEmpty = values => values.some(value => value === "")
+
+    $("#submit-button").click(() => {
+
+        const values = [
+            $("#user_name").val(),
+            $("#user_email").val(),
+            $("#password").val(),
+            $("#re-password").val()
+        ]
+
+        if (isExistEmpty(values)) {
+            alert("입력되지 않은 항목이 존재합니다.")
+            return;
+        }
+
+        if ($("#password").val() !== $("#re-password").val()) {
+            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+            return;
+        }
+
+        const url = "/user/register/"
+        const params = $("#signup-form").serialize()
+        $.post(url, params)
+            .done(() => location.href = "/")
+            .fail(res => {
+                if (res.status === 409) {
+                    alert(res.responseJSON.error);
+                } else {
+                    alert("Unknown error");
+                }
+            });
+    });
+</script>
+{% endblock %}

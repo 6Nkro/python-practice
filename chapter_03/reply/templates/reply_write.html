@@ -1,0 +1,22 @@
+<div class="row mb-5">
+    <div class="col-11">
+        <textarea id="replyContent" placeholder="댓글을 입력하세요..." class="form-control"></textarea>
+    </div>
+    <div class="col-1">
+        <button id="submitReply" class="btn btn-secondary w-100" style="height: 100%;">저장</button>
+    </div>
+</div>
+
+<script>
+    $("#submitReply").click(() => {
+        let content = $("#replyContent").val();
+
+        if (content.trim() === "") {
+            alert("내용을 입력하세요.");
+            return;
+        }
+
+        const url = "/reply/write/{{ board.id }}/"
+        $.post(url, { content }).done(() => location.reload())
+    });
+</script>

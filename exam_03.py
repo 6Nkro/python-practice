@@ -27,8 +27,7 @@ print(list[math.ceil(score / 20) - 1] if score != 0 else "E")
 # 4. 다음 세 개의 숫자 중 가장 큰수를 출력하세요.(if문 사용) : 12, 6, 18
 
 max = 0
-list = [12, 6, 18]
-for n in list:
+for n in [12, 6, 18]:
     if n > max:
         max = n
 print(max)
