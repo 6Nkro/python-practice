@@ -37,10 +37,14 @@ export const AppHeaderContainer = () => {
             />
           </Box>
           <Box sx={{ pr: 3 }}>
-            <Button onClick={() => dispatch(openLoginModal())}>로그인</Button>
-            <Button onClick={() => dispatch(openSignUpModal())}>
-              회원가입
-            </Button>
+            <Button
+              onClick={() => dispatch(openLoginModal())}
+              children="로그인"
+            />
+            <Button
+              onClick={() => dispatch(openSignUpModal())}
+              children="회원가입"
+            />
           </Box>
         </Box>
       </HeaderAppBar>
