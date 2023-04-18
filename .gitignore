@@ -3,6 +3,7 @@
 /Include/
 /Lib/
 /Scripts/
+/venv/
 *.iml
 *.pyc
 *.cfg
