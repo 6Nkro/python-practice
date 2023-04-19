@@ -1,13 +1,22 @@
-from utils import load_json
+from utils import load_json, dump_json
 
 
 class Account:
-    def __init__(self, id, name):
+    def __init__(self, name, id=None):
         self.id = id
         self.name = name
 
     def __str__(self):
         return self.name
+
+    def save(self):
+        accounts = load_json("account")
+        if self.name in [account["name"] for account in accounts]:
+            print("이미 등록된 계정입니다.")
+        else:
+            self.id = max([account["id"] for account in accounts]) + 1
+            dump_json("account", [*accounts, vars(self)])
+            print(f"\'{self}\' 계정이 등록되었습니다.")
 
 
 class Store:

@@ -1,40 +1,76 @@
 from datetime import datetime
 
+from classes import Account
+from utils import load_json
+
 
 class MainService:
-    # _instance = None
-    #
-    # def __new__(cls, *args, **kwargs):
-    #     if cls._instance is None:
-    #         cls._instance = super().__new__(cls)
-    #     return cls._instance
 
-    def __init__(self, account, stores):
-        self.account = account
-        self.stores = stores
-
-    def choice_store(self):
-        stores_to_str = "\n".join([f"{store.id}. {store}" for store in self.stores])
-        output = f"식당을 선택해주세요. (숫자 입력)\n{stores_to_str}\n>> "
-        return choice_in_items(self.stores, output)
-
-    def choice_meal(self, store):
-        meals = store.meals
-        meals_to_str = "\n".join([
-            f"{index + 1}. [{' / '.join([menu.item for menu in meal.menus])}] {meal.price}원 - {meal.category()}"
-            for index, meal in enumerate(meals)
-        ])
-        output = f"---------- {store} 메뉴판 ----------\n{meals_to_str}\n>> "
-        return choice_in_items(meals, output)
+    @staticmethod
+    def login(name):
+        for account in load_json("account"):
+            if name == account["name"]:
+                return Account(**account)
+        return None
 
 
-def choice_in_items(items, output):
-    while True:
-        try:
-            choice = int(input(output))
-            if choice <= 0:
-                raise Exception
-        except:
-            print("----- 입력값이 올바르지 않습니다. -----\n")
-        else:
-            return items[choice - 1]
+def choice(func):
+    def wrapper(items):
+        display = f"{func(items)}\n>> "
+        while True:
+            index = 0
+            try:
+                index = int(input(display))
+                if index <= 0:
+                    raise Exception
+                item = items[index - 1]
+            except Exception:
+                print("----- 입력값이 올바르지 않습니다. -----")
+                print(f"index: {index}, len(items): {len(items)}\n")
+            else:
+                return item
+
+    return wrapper
+
+
+@choice
+def choice_in_items(items, extra=""):
+    return "\n".join([f"{index + 1}. {item} {extra}" for index, item in enumerate(items)])
+
+
+@choice
+def choice_in_stores(stores):
+    return "\n".join([
+        f"{store.id}. {store} [{display_services(store.services)} 마감: {store.close}시]"
+        for store in stores
+    ])
+
+
+@choice
+def choice_in_meals(meals):
+    return "\n".join([
+        f"{index + 1}. [{display_menus(meal.menus)}] {meal.price}원 - {meal.category()}"
+        for index, meal in enumerate(meals)
+    ])
+
+
+def display_services(services):
+    return " ".join([
+        f"{service}: {service.time_at}시"
+        for service in services
+    ])
+
+
+def display_menus(menus):
+    return " / ".join([menu.item for menu in menus])
+
+
+def available_meals(store):
+    curr_hour = datetime.now().hour
+    if curr_hour < store.open or curr_hour >= store.close:
+        return None
+
+    for service in store.services:
+        if curr_hour >= service.time_at:
+            category_id = service.category_id
+    return [meal for meal in store.meals if meal.category_id == category_id]
