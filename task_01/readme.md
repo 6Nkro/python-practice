@@ -15,3 +15,6 @@
 - Restaurant (식당)
 - Account (계정)
 - MainService (메인서비스시작)
+
+### UML
+<img src="https://user-images.githubusercontent.com/130739397/233267921-af5ed4a1-7f01-4248-a2b7-1ea815c6bfa9.png" />
