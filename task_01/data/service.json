@@ -52,5 +52,11 @@
     "store_id": 3,
     "category_id": 3,
     "time_at": 20
+  },
+  {
+    "id": 10,
+    "time_at": 24,
+    "store_id": 4,
+    "category_id": 2
   }
 ]

@@ -1,30 +1,48 @@
 from datetime import datetime
 
+from task_01.classes.mixin import Mixin
+from task_01.classes.resource import Resource
+
 
 class Store:
-    def __init__(self, meals, services, id, name, close):
-        self.meals = [meal for meal in meals if id == meal.store_id]
-        self.services = [service for service in services if id == service.store_id]
+    TYPE = "식당"
+    FILE_NAME = "store"
+
+    def __init__(self, id, name, close):
         self.id = id
         self.name = name
         self.close = close
-        self.open = min([service.time_at for service in self.services])
 
     def __str__(self):
-        display_services = " ".join([str(service) for service in self.services])
+        display_services = " ".join([str(service) for service in self.services()])
         return f"{self.name} [{display_services} 마감: {self.close}시]"
+
+    def meals(self):
+        return [meal for meal in Resource.meals if self.id == meal.store_id]
+
+    def services(self):
+        return [service for service in Resource.services if self.id == service.store_id]
+
+    def open(self):
+        return min([service.time_at for service in self.services()])
 
     def available_meals(self):
         curr_hour = datetime.now().hour
-        if curr_hour < self.open or curr_hour >= self.close:
+        if curr_hour < self.open() or curr_hour >= self.close:
             return None
 
-        category_id = next(service.category_id for service in self.services if curr_hour >= service.time_at)
-        return [meal for meal in self.meals if meal.category_id == category_id]
+        category_id = next(service.category_id for service in self.services() if curr_hour >= service.time_at)
+        return [meal for meal in self.meals() if meal.category_id == category_id]
 
-    @staticmethod
-    def save():
-        print("식당 등록 메소드 호출 [미구현]")
+    @classmethod
+    def save(cls):
+        manuals = [
+            Mixin(key="name", type=str),
+            Mixin(key="close", type=int, range=(0, 23))
+        ]
+        options = []
+        unique = "name"
+        Mixin.save(cls, manuals, options, unique)
 
     @staticmethod
     def edit():

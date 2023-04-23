@@ -32,16 +32,24 @@ export const FormModal: React.FC<FormModalProps> = ({
       PaperProps={{ style: { width: "100%", maxWidth: "500px" } }}
     >
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        {textFieldData.map((textFieldProps, index) => (
-          <TextField key={index} margin="dense" fullWidth {...textFieldProps} />
-        ))}
-      </DialogContent>
-      <DialogActions sx={{ px: 3, pb: 2 }}>
-        {buttonData.map((buttonProps, index) => (
-          <Button key={index} fullWidth {...buttonProps} />
-        ))}
-      </DialogActions>
+      <form>
+        <DialogContent>
+          {textFieldData.map((textFieldProps, index) => (
+            <TextField
+              key={index}
+              margin="dense"
+              autoComplete="off"
+              fullWidth
+              {...textFieldProps}
+            />
+          ))}
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          {buttonData.map((buttonProps, index) => (
+            <Button key={index} type="button" fullWidth {...buttonProps} />
+          ))}
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };

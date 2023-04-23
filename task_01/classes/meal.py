@@ -1,23 +1,38 @@
-from task_01.classes.category import categories
+from task_01.classes.mixin import Mixin
+from task_01.classes.resource import Resource
 
 
 class Meal:
+    TYPE = "식사"
+    FILE_NAME = "meal"
 
-    def __init__(self, menus, id, store_id, category_id, price):
-        self.menus = [menu for menu in menus if id == menu.meal_id]
+    def __init__(self, id, store_id, category_id, price):
         self.id = id
         self.store_id = store_id
         self.category_id = category_id
         self.price = price
-        self.category = next(category.type for category in categories if self.category_id == category.id)
 
     def __str__(self):
-        display_menus = " / ".join([menu.item for menu in self.menus])
+        display_menus = " / ".join([menu.name for menu in self.menus()])
         return f"[{display_menus}] {self.price}원 - {self.category}"
 
-    @staticmethod
-    def save():
-        print("식사 등록 메소드 호출 [미구현]")
+    def menus(self):
+        return [menu for menu in Resource.menus if self.id == menu.meal_id]
+
+    def category(self):
+        return next(category.name for category in Resource.categories if self.category_id == category.id)
+
+    @classmethod
+    def save(cls):
+        manuals = [
+            Mixin(key="price", type=int)
+        ]
+        options = [
+            Mixin(key="store_id", items=Resource.stores),
+            Mixin(key="category_id", items=Resource.categories)
+        ]
+        unique = None
+        Mixin.save(cls, manuals, options, unique)
 
     @staticmethod
     def edit():

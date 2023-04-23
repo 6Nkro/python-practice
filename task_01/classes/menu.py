@@ -1,15 +1,29 @@
+from task_01.classes.mixin import Mixin
+from task_01.classes.resource import Resource
+
+
 class Menu:
-    def __init__(self, id, meal_id, item):
+    TYPE = "메뉴"
+    FILE_NAME = "menu"
+
+    def __init__(self, id, meal_id, name):
         self.id = id
         self.meal_id = meal_id
-        self.item = item
+        self.name = name
 
     def __str__(self):
-        return self.item
+        return self.name
 
-    @staticmethod
-    def save():
-        print("메뉴 등록 메소드 호출 [미구현]")
+    @classmethod
+    def save(cls):
+        manuals = [
+            Mixin(key="name", type=str)
+        ]
+        options = [
+            Mixin(key="meal_id", items=Resource.meals)
+        ]
+        unique = None
+        Mixin.save(cls, manuals, options, unique)
 
     @staticmethod
     def edit():

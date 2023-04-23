@@ -9,11 +9,9 @@ interface SignUpData {
 
 export const signUp = async (signUpData: SignUpData) => {
   try {
-    const response = await axios.post("/api/account/signup", signUpData);
+    const response = await axios.post("/api/account/signup/", signUpData);
     console.log(response);
-    return response.data;
-  } catch (error) {
-    console.error("Error in signUp:", error);
-    throw error;
+  } catch (error: any) {
+    console.error(error.response.data);
   }
 };
