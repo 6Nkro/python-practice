@@ -16,5 +16,8 @@
 - Account (계정)
 - MainService (메인서비스시작)
 
-### UML
+### UML (이전)
 <img src="https://user-images.githubusercontent.com/130739397/233267921-af5ed4a1-7f01-4248-a2b7-1ea815c6bfa9.png" />
+
+### UML (수정)
+<img src="https://user-images.githubusercontent.com/114794711/233861556-c512c945-4f86-4f30-923a-15fe8f7c06b9.png" />
