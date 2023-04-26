@@ -1,10 +1,19 @@
-from task_01.classes.mixin import Mixin
-from task_01.utils import load_json, dump_json, select_items
+from abc import ABC
+from task_01b.models.model import Model
+from task_01b.utils import load_json, dump_json
 
 
-class Account:
-    TYPE = "계정"
-    FILE_NAME = "account"
+class Account(Model, ABC):
+    SETTINGS = {
+        "manuals": [
+            {
+                "key": "name",
+                "type": str
+            },
+        ],
+        "options": [],
+        "unique": "name"
+    }
 
     def __init__(self, name, id):
         self.id = id
@@ -13,28 +22,12 @@ class Account:
     def __str__(self):
         return self.name
 
-    @staticmethod
-    def login():
-        name = input("아이디를 입력하세요.\n>> ")
-        match_account = (Account(**account) for account in load_json("account") if name == account["name"])
-        account = next(match_account, None)
-
-        if account is None:
-            print("등록된 계정이 없습니다.")
-        return account
-
-    @classmethod
-    def save(cls):
-        manuals = [
-            Mixin(key="name", type=str)
-        ]
-        options = []
-        unique = "name"
-        Mixin.save(cls, manuals, options, unique)
+    def save(self):
+        dump_json(self)
 
     @classmethod
     def edit(cls):
-        accounts = load_json("account")
+        accounts = Resource.get("account")
         account = cls.select_account(accounts, "변경")
 
         if account is not None:
@@ -46,7 +39,7 @@ class Account:
 
     @classmethod
     def delete(cls):
-        accounts = load_json("account")
+        accounts = Resource.get("account")
         account = cls.select_account(accounts, "삭제")
 
         if account is not None:
