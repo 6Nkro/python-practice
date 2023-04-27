@@ -1,11 +1,5 @@
-from task_01b.models import Service
+from task_01b.controllers.controller import Controller
 
 
-class ServiceController:
-    _instance = None
+class ServiceController(Controller):
     CAPTION = "서비스"
-
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance

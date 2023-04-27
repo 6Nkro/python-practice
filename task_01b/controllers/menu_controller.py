@@ -1,11 +1,5 @@
-from task_01b.models import Menu
+from task_01b.controllers.controller import Controller
 
 
-class MenuController:
-    _instance = None
+class MenuController(Controller):
     CAPTION = "메뉴"
-
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance

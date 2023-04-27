@@ -1,13 +1,9 @@
+from task_01b.models.model import Model
 
 
-class Category:
-    SAVE_SETTING = {
-        "manuals": [
-            {
-                "key": "name",
-                "type": str
-             }
-        ],
+class Category(Model):
+    SETTINGS = {
+        "manuals": ["name"],
         "options": [],
         "unique": "name"
     }
@@ -18,15 +14,3 @@ class Category:
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def save(cls):
-        Mixin.save(cls)
-
-    @staticmethod
-    def edit():
-        print("서비스 수정 메소드 호출 [미구현]")
-
-    @staticmethod
-    def delete():
-        print("서비스 삭제 메소드 호출 [미구현]")

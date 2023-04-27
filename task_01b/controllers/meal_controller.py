@@ -1,11 +1,5 @@
-from task_01b.models import Meal
+from task_01b.controllers.controller import Controller
 
 
-class MealController:
-    _instance = None
+class MealController(Controller):
     CAPTION = "식사"
-
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance

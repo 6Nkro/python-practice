@@ -16,8 +16,8 @@
 - Account (계정)
 - MainService (메인서비스시작)
 
-### UML (이전)
-<img src="https://user-images.githubusercontent.com/130739397/233267921-af5ed4a1-7f01-4248-a2b7-1ea815c6bfa9.png" />
+### 객체지향 (클래스설계1 심화)
 
-### UML (수정)
-<img src="https://user-images.githubusercontent.com/114794711/233861556-c512c945-4f86-4f30-923a-15fe8f7c06b9.png" />
+> 목표 : 디자인 패턴, 인스턴스의 상태와 생명 주기에 대한 이해
+
+위의 프로그램을 MVC 모델과 유사하게 리팩토링 해보기

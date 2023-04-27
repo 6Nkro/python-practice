@@ -1,3 +1,5 @@
+from task_01b.controllers import StoreController
+from task_01b.models import Store
 from task_01b.utils import select_items
 
 
@@ -6,11 +8,11 @@ class OrderView:
     def __init__(self, account):
         self.account = account
 
-    @classmethod
-    def render(cls):
+    def render(self):
         print("---------- User Service ----------")
         print("식당을 선택해주세요. (번호 입력)")
-        store = select_items(Resource.stores, force=True)
+        stores = StoreController(Store).find_all()
+        store = select_items(stores, force=True)
         meals = store.available_meals()
 
         if meals is None:
@@ -18,4 +20,4 @@ class OrderView:
         else:
             print("메뉴를 선택해주세요. (번호 입력)")
             meal = select_items(meals, force=True)
-            print(f"{meal.price}원이 결제되었습니다.")
+            print(f"{self.account}님 {meal.price}원이 결제되었습니다.")

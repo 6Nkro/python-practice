@@ -1,21 +1,27 @@
-from abc import ABCMeta, abstractmethod
-
-from task_01b.utils import dump_json
+from task_01b.utils import dump_json, load_json
 
 
-class Model(metaclass=ABCMeta):
+class Model:
 
     @classmethod
-    def FILE_NAME(cls):
+    def file_name(cls):
         return cls.__name__.lower()
 
-    def save(self):
-        dump_json(self)
+    @classmethod
+    def find_all(cls):
+        return load_json(cls.file_name())
 
-    @abstractmethod
-    def edit(self):
+    def insert(self):
+        try:
+            data = load_json(self.file_name())
+            data.append(vars(self))
+            dump_json(self.file_name(), data)
+            return 201
+        except Exception:
+            return 400
+
+    def update(self):
         pass
 
-    @abstractmethod
     def delete(self):
         pass
